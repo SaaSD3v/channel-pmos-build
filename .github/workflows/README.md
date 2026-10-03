@@ -1,25 +1,17 @@
 # GitHub Actions workflows
 
-This branch exposes the integrated build and the manual launchers for all separated component builds.
+The `kernel-github` branch contains a kernel-only GitHub Actions build.
 
-## `build.yml`
+## `kernel-github.yml`
 
-Runs the complete Channel build on `main`: kernel, modules, lk2nd, DTBO, Debian rootfs, rootfs-independent boot image, validation, and final artifacts.
+Builds Motorola Moto G7 Play (`channel`) directly from:
 
-## `rootfs.yml`
+- repository: `SaaSD3v/linux`
+- branch: `msm8953/latest`
+- in-tree configs: `arch/arm64/configs/msm8953.config` and `arch/arm64/configs/motorola-channel.config`
 
-Manual launcher for the separated rootfs build. It checks out the `rootfs` branch before executing the rootfs workflow.
+The workflow does not apply an external device-tree patch, does not merge a configuration fragment from this build repository, and does not call project-owned kernel or boot-image shell scripts.
 
-## `kernel-mainline-7.1.yml`
+It publishes the raw kernel image, Channel DTB, matching modules, final kernel config, release metadata, `System.map`, and SHA-256 hashes. It intentionally does not create a `boot.img`, embed a rootfs/initramfs, or choose a root partition.
 
-Manual launcher for the separated kernel build. It checks out `kernel-mainline-7.1`.
-
-## `dtbo.yml`
-
-Manual launcher for the separated DTBO build. It checks out `dtbo`.
-
-## `lk2nd.yml`
-
-Manual launcher for the separated lk2nd build. It checks out `lk2nd`.
-
-Keeping these files on the default branch makes their **Run workflow** controls available in GitHub Actions.
+The other component launcher workflows are retained from `main` for their respective branches.

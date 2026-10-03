@@ -1,18 +1,11 @@
 # Kernel configuration
 
-This directory contains project-owned kernel configuration fragments.
+The `kernel-github` branch does not keep an external Channel kernel fragment in this build repository.
 
-## `channel-mainline.config`
+Kernel configuration is sourced directly from the kernel tree:
 
-This fragment is merged on top of the kernel's ARM64 `defconfig` during Channel builds.
+- `arch/arm64/configs/defconfig`
+- `arch/arm64/configs/msm8953.config`
+- `arch/arm64/configs/motorola-channel.config`
 
-It keeps the options required by the current build flow, including:
-
-- initramfs support;
-- ext4 and MMC/SDHCI storage support;
-- Qualcomm DWC3 USB gadget support;
-- configfs and RNDIS support;
-- basic networking used by the generated rootfs;
-- a small set of bring-up/debug options.
-
-The final kernel configuration is produced by the build workflow or `scripts/build-kernel.sh`; this file is only the project-specific fragment.
+This keeps the Channel hardware and bring-up requirements in `SaaSD3v/linux` instead of injecting them from the postmarketOS/build repository.
